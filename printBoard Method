@@ -1,19 +1,19 @@
 public static void printBoard(char[][] array) {
-	int q = 0;
-	for(int i = 0; i < array.length; i++) {
-		for (int j = 0; j < array[0].length; j++) {
-			if (q % 11 == 0) {
-				if (!(q == 0))						
-					System.out.print("\n-------------");
-				if (q == 0) {
-					System.out.println(" 1 | 2 | 3 ");
+		int q = 0;
+		for(int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array[0].length; j++) {
+				if (q % array[0].length == 0) {
+					if (!(q == 0))						
+						System.out.print("\n------------");
+					if (q == 0) {
+						System.out.println("  1 | 2 | 3 ");
+						System.out.print(array[i][j]);
+					}
+					else
+						System.out.print("\n" + array[i][j]);
+				}else
 					System.out.print(array[i][j]);
-				}
-				else
-					System.out.print("\n" + array[i][j]);
+				q++;
 			}
-			System.out.print(array[i][j]);
-			q++;
 		}
 	}
-}
