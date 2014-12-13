@@ -1,0 +1,10 @@
+public static void printBoard(char[][] array) {
+		int q = 0;
+		for(int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array[0].length; j++) {
+				if (q % 11 == 0 && q != 0) {
+					System.out.print("\n" + array[i][j]);
+				}
+				System.out.print(array[i][j]);
+				q++;
+			}
