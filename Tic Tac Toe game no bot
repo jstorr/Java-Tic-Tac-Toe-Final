@@ -1,0 +1,126 @@
+package Game;
+
+import java.util.Scanner;
+
+public class Game {
+	public char[][] gameArray;
+	public int pos1;
+	public int pos2;
+
+	public static void main(String []args) {
+		int player = 0; int count = 0;
+		Game myGame = new Game();
+		boolean continueGame = true;
+		myGame.gameArray = initializeArray();
+		Scanner input = new Scanner(System.in);
+		do {
+			String temp = "O";
+			if (player % 2 == 0 ) {
+				temp = "X";
+			}
+			if (count == 0)
+				System.out.print("Enter your move " + temp + " with syntax (1,2) ");
+			else
+				System.out.print("\nEnter your move " + temp + " with syntax (1,2) ");
+			String userInput = input.next();
+			if (checkPosIsValid(userInput, myGame) == true) {
+				if (checkPosIsOpen(myGame) == true) {
+					placeMarker(userInput, player, myGame);
+					printBoard(myGame);
+					player++;
+				} else
+					System.out.println("Try again");
+			} else
+				System.out.println("Try again");
+			count++;
+		} while (continueGame);
+	}
+	public static char[][] initializeArray() {
+		char[][] array = {
+				{49, 32, 32, 32,  124, 32, 32, 32, 124, 32, 32, 32},
+				{50, 32, 32, 32,  124, 32, 32, 32, 124, 32, 32, 32},
+				{51, 32, 32, 32,  124, 32, 32, 32, 124, 32, 32, 32}
+		};
+		return array;
+	}
+	public static void printBoard(Game myGame) {
+		char[][] array = myGame.gameArray;
+		int q = 0;
+		for(int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array[0].length; j++) {
+				if (q % array[0].length == 0) {
+					if (!(q == 0))						
+						System.out.print("\n------------");
+					if (q == 0) {
+						System.out.println("  1 | 2 | 3 ");
+						System.out.print(array[i][j]);
+					}
+					else
+						System.out.print("\n" + array[i][j]);
+				}else
+					System.out.print(array[i][j]);
+				q++;
+			}
+		}
+	}
+	public static void placeMarker(String input, int player, Game myGame) { // spots on array 2, 6, 10
+		int pos1 = myGame.pos1;
+		int pos2 = myGame.pos2;
+		char temp = 79;
+		if (pos2 == 1) {
+			if (player % 2 == 0) {
+				temp = 88;
+				myGame.gameArray[pos1-1][2] = temp;
+			} else
+				myGame.gameArray[pos1-1][2] = temp;
+		}
+		if (pos2 == 2) {
+			if (player % 2 == 0) {
+				temp = 88;
+				myGame.gameArray[pos1-1][6] = temp;
+			} else
+				myGame.gameArray[pos1-1][6] = temp;
+		}
+		if (pos2 == 3) {
+			if (player % 2 == 0) {
+				temp = 88;
+				myGame.gameArray[pos1-1][10] = temp;
+			} else
+				myGame.gameArray[pos1-1][10] = temp;
+		}	
+	}
+	public static boolean checkPosIsOpen(Game myGame) {
+		int pos1 = myGame.pos1;
+		int pos2 = myGame.pos2;
+		if (pos2 == 1){
+			pos2 = 2;
+		}
+		if (pos2 == 2) {
+			pos2 = 6;
+		}
+		if (pos2 == 3) {
+			pos2 = 10;
+		}
+		if (myGame.gameArray[pos1 - 1][pos2] == 32)
+			return true;
+		else {
+			return false;
+		}
+	}
+	public static boolean checkPosIsValid(String input, Game myGame) {
+		if (input.length() == 3) {
+			changeToInteger1(input, myGame); 
+			changeToInteger2(input, myGame);
+			if ((myGame.pos1 <= 3 && myGame.pos1 >= 1) && (myGame.pos2 <= 3 && myGame.pos2 >= 1)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public static void changeToInteger1(String input, Game myGame) {
+		myGame.pos1 = Integer.parseInt(input.substring(0,1));
+	}
+	public static void changeToInteger2(String input, Game myGame){
+		myGame.pos2 = Integer.parseInt(input.substring(2,3));
+	}
+}
